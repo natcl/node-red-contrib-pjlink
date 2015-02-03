@@ -1,0 +1,41 @@
+<script type="text/javascript">
+    RED.nodes.registerType('pjlink',{
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            ip: {value:""},
+            port: {value:4352},
+            password: {value:""},
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name||"pjlink";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="pjlink">
+    <div class="form-row">
+        <label for="node-input-ip"><i class="icon-tag"></i> IP</label>
+        <input type="text" id="node-input-ip" placeholder="IP">
+    </div>
+    <div class="form-row">
+        <label for="node-input-port"><i class="icon-tag"></i> Port</label>
+        <input type="text" id="node-input-port" placeholder="Port">
+    </div>
+    <div class="form-row">
+        <label for="node-input-password"><i class="icon-tag"></i> Password</label>
+        <input type="text" id="node-input-password" placeholder="Password">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="pjlink">
+    <p>A simple node that converts the message payloads into all lower-case characters</p>
+</script>

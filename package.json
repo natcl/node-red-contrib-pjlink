@@ -3,10 +3,11 @@
     "version"      : "0.0.1",
     "description"  : "A PJLink node for Node-RED",
     "dependencies": {
+        "pjlink": "0.1.x"
     },
     "repository" : {
         "type": "git",
-        "url": "https://github.com/natcl/node-red-contrib-pjlink"
+        "url": "https://github.com/natcl/node-red-contrib-pjlink.git"
     },
     "keywords": [ "node-red", "pjlink" ],
     "node-red"     : {
