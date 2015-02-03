@@ -1,0 +1,17 @@
+{
+    "name"         : "node-red-contrib-pjlink",
+    "version"      : "0.0.1",
+    "description"  : "A PJLink node for Node-RED",
+    "dependencies": {
+    },
+    "repository" : {
+        "type": "git",
+        "url": "https://github.com/natcl/node-red-contrib-pjlink"
+    },
+    "keywords": [ "node-red", "pjlink" ],
+    "node-red"     : {
+        "nodes"    : {
+            "pjlink": "pjlink/pjlink.js"
+        }
+    }
+}
