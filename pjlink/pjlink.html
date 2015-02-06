@@ -4,14 +4,14 @@
         color: '#a6bbcf',
         defaults: {
             ip: {value:"", required: true},
-            port: {value:4352, required: true},
+            port: {value:4352, required: true, validate:RED.validators.number()},
             name: {value:""}
         },
         credentials: {
             password: {type:"password"}
         },
         inputs:1,
-        outputs:1,
+        outputs:2,
         icon: "file.png",
         label: function() {
             return this.name||"pjlink";
@@ -39,5 +39,6 @@
 </script>
 
 <script type="text/x-red" data-help-name="pjlink">
-    <p>A simple node that converts the message payloads into all lower-case characters</p>
+    <p>A node to control projectors supporting the PJLink protocol.</p>
+    <p>The first output sends data from queries, the second output sends errors.</p>
 </script>
