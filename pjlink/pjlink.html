@@ -39,6 +39,29 @@
 </script>
 
 <script type="text/x-red" data-help-name="pjlink">
-    <p>A node to control projectors supporting the PJLink protocol.</p>
-    <p>The first output sends data from queries, the second output sends errors.</p>
+    <p>A node to control projectors supporting the PJLink protocol.<br/>
+    The first output sends data from queries, the second output sends errors.</p>
+
+    <p>You can send the following commands as a text string in <code>msg.payload</code>:</p>
+
+    <ul>
+    <li>on</li>
+    <li>off</li>
+    <li>getname</li>
+    <li>getmanufacturer</li>
+    <li>getmodel</li>
+    <li>getlamps</li>
+    <li>getinputs</li>
+    <li>getinput</li>
+    <li>getinfo</li>
+    <li>getpowerstate</li>
+    <li>getmute</li>
+    <li>getclass</li>
+    <li>geterrors</li>
+    </ul>
+
+    <p>You can also set the mute status and set the inputs by sending this object as <code>msg.payload</code>:</p>
+
+    <p><code>{"setinput": {"source": 3, "channel": 3}}</code><br/>
+    <code>{"setmute": true}</code></p>
 </script>
