@@ -1,3 +1,19 @@
+<!--
+  Copyright 2015 Nathanaël Lécaudé
+ 
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+ 
+  http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
 <script type="text/javascript">
     RED.nodes.registerType('pjlink',{
         category: 'advanced',
@@ -21,19 +37,19 @@
 
 <script type="text/x-red" data-template-name="pjlink">
     <div class="form-row">
-        <label for="node-input-ip"><i class="icon-tag"></i> IP</label>
+        <label for="node-input-ip"><i class="fa fa-globe"></i> IP</label>
         <input type="text" id="node-input-ip" placeholder="IP">
     </div>
     <div class="form-row">
-        <label for="node-input-port"><i class="icon-tag"></i> Port</label>
+        <label for="node-input-port"><i class="fa fa-random"></i> Port</label>
         <input type="text" id="node-input-port" placeholder="Port">
     </div>
     <div class="form-row">
-        <label for="node-input-password"><i class="icon-tag"></i> Password</label>
+        <label for="node-input-password"><i class="fa fa-lock"></i> Password</label>
         <input type="password" id="node-input-password">
     </div>
     <div class="form-row">
-        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 </script>
@@ -47,6 +63,8 @@
     <ul>
     <li>on</li>
     <li>off</li>
+    <li>muteon</li>
+    <li>muteoff</li>
     <li>getname</li>
     <li>getmanufacturer</li>
     <li>getmodel</li>
@@ -60,9 +78,8 @@
     <li>geterrors</li>
     </ul>
 
-    <p>You can also set the mute status and set the inputs by sending this object as <code>msg.payload</code></p>
+    <p>You can also set the inputs by sending this object as <code>msg.payload</code></p>
 
     <p><code>{"setinput": {"source": 3, "channel": 3}}</code></p>
-    <p><code>{"setmute": true}</code> or <code>{"setmute": false}</code></p>
     <p>See <a href="http://flows.nodered.org/flow/f9b28307c3841f6ef1e6">this flow </a>for an example of all the commands.<p>
 </script>

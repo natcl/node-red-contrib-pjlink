@@ -15,6 +15,8 @@ You can send the following commands as a text string in <code>msg.payload</code>
 
 - on
 - off
+- muteon
+- muteoff
 - getname
 - getmanufacturer
 - getmodel
@@ -28,10 +30,8 @@ You can send the following commands as a text string in <code>msg.payload</code>
 - geterrors
 
 
-You can also set the mute status and set the inputs by sending this object as <code>msg.payload</code>
+You can also set the inputs by sending this object as <code>msg.payload</code>
 
 <code>{"setinput": {"source": 3, "channel": 3}}</code>
-
-<code>{"setmute": true}</code> or <code>{"setmute": false}</code>
 
 See <a href="http://flows.nodered.org/flow/f9b28307c3841f6ef1e6">this flow </a>for an example of all the commands.
