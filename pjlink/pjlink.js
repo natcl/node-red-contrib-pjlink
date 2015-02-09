@@ -142,6 +142,10 @@ module.exports = function(RED) {
                 });
             }
         });
+        
+        this.on('close', function() {
+            beamer.disconnect();
+        });
     }
     RED.nodes.registerType("pjlink",PJLink_func,{
         credentials: {
