@@ -1,7 +1,7 @@
 <script type="text/javascript">
     RED.nodes.registerType('pjlink',{
-        category: 'function',
-        color: '#a6bbcf',
+        category: 'advanced',
+        color: '#0B2D87',
         defaults: {
             ip: {value:"", required: true},
             port: {value:4352, required: true, validate:RED.validators.number()},
@@ -12,7 +12,7 @@
         },
         inputs:1,
         outputs:2,
-        icon: "file.png",
+        icon: "light.png",
         label: function() {
             return this.name||"pjlink";
         }
@@ -64,4 +64,5 @@
 
     <p><code>{"setinput": {"source": 3, "channel": 3}}</code></p>
     <p><code>{"setmute": true}</code> or <code>{"setmute": false}</code></p>
+    <p>See <a href="http://flows.nodered.org/flow/f9b28307c3841f6ef1e6">this flow </a>for an example of all the commands<p>
 </script>
