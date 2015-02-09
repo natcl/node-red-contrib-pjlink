@@ -17,6 +17,7 @@ You can send the following commands as a text string in <code>msg.payload</code>
 - off
 - muteon
 - muteoff
+- getmute
 - getname
 - getmanufacturer
 - getmodel
@@ -25,7 +26,6 @@ You can send the following commands as a text string in <code>msg.payload</code>
 - getinput
 - getinfo
 - getpowerstate
-- getmute
 - getclass
 - geterrors
 
