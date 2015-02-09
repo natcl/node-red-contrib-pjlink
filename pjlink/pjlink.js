@@ -6,7 +6,6 @@ module.exports = function(RED) {
         this.port = config.port;
         var node = this;
         var beamer = new pjlink(node.ip, node.port, node.credentials.password);
-        beamer.settings.timeout = 0;
         this.on('input', function(msg) {
             if (msg.payload == "on") {
                 beamer.powerOn(function(err){
