@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-pjlink",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A PJLink node for Node-RED",
   "dependencies": {
     "pjlink": "0.2.0"
