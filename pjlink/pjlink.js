@@ -22,17 +22,42 @@ module.exports = function(RED) {
         this.port = config.port;
         var node = this;
         var beamer = new pjlink(node.ip, node.port, node.credentials.password);
+        refreshNodeStatus();
+        var interval = setInterval(refreshNodeStatus, 60 * 1000);
+
+        function refreshNodeStatus() {
+            beamer.getPowerState(function(err, state) {
+                if (state == 0)
+                    node.status({fill:"red",shape:"dot",text:"off"});
+                if (state == 1)
+                    node.status({fill:"green",shape:"dot",text:"on"});
+                if (state == 2)
+                    node.status({fill:"blue",shape:"dot",text:"cooling down..."});
+                if (state == 3)
+                    node.status({fill:"yellow",shape:"dot",text:"warming up..."});                
+                if (err)
+                    node.status({fill:"red",shape:"dot",text:"error"});
+            });
+        }
+
         this.on('input', function(msg) {
             if (msg.payload == "on") {
                 beamer.powerOn(function(err){
                     if (err)
                         node.send([null, {payload: err}]);
+                    else {
+                        node.status({fill:"grey",shape:"dot",text:"updating..."});
+                        setTimeout(refreshNodeStatus, 15000);
+                    }
                 });
             }
             if (msg.payload == "off") {
                 beamer.powerOff(function(err){
                     if (err)
                         node.send([null, {payload: err}]);
+                    else
+                        node.status({fill:"grey",shape:"dot",text:"updating..."});
+                        setTimeout(refreshNodeStatus, 5000);
                 });
             }
             if (msg.payload == "getname") {
@@ -119,8 +144,10 @@ module.exports = function(RED) {
                 beamer.getPowerState(function(err, state){
                     if (err)
                         node.send([null, {payload: err}]);
-                    else
+                    else {
                         node.send([{payload: state}, null]);
+                        refreshNodeStatus();
+                    }
                 });
             }
             if (msg.payload == "muteon") {
@@ -145,6 +172,7 @@ module.exports = function(RED) {
         
         this.on('close', function() {
             beamer.disconnect();
+            clearInterval(interval);
         });
     }
     RED.nodes.registerType("pjlink",PJLink_func,{
