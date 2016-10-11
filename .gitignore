@@ -1,9 +1,7 @@
-# Sublime
-*.sublime-workspace
-
 # Logs
 logs
 *.log
+npm-debug.log*
 
 # Runtime data
 pids
@@ -19,13 +17,26 @@ coverage
 # Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
 .grunt
 
+# node-waf configuration
+.lock-wscript
+
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
 # Dependency directory
-# Commenting this out is preferred by some people, see
-# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git-
 node_modules
 
-# Users Environment Variables
-.lock-wscript
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# OS X
+.DS_Store
+
+# Node-RED
+.config.json
+.sessions.json
+*json.backup
+flows_cred.json
