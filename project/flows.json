@@ -8,14 +8,61 @@
         "id": "c22ab366.379258",
         "type": "pjlink",
         "z": "51881e4c.2f3178",
-        "ip": "",
+        "ip": "127.0.0.1",
         "port": 4352,
         "name": "",
-        "x": 760,
+        "x": 570,
         "y": 160,
         "wires": [
-            [],
-            []
+            [
+                "b4e37cd7.f531f8"
+            ],
+            [
+                "a4513b41.eb4fa"
+            ]
+        ]
+    },
+    {
+        "id": "b4e37cd7.f531f8",
+        "type": "debug",
+        "z": "51881e4c.2f3178",
+        "name": "Main",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 750,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "a4513b41.eb4fa",
+        "type": "debug",
+        "z": "51881e4c.2f3178",
+        "name": "Error",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 750,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "de87bec3.9557c8",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "",
+        "payload": "getinfo",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 370,
+        "y": 160,
+        "wires": [
+            [
+                "c22ab366.379258"
+            ]
         ]
     }
 ]
