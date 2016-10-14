@@ -5,6 +5,35 @@
         "label": "Flow 1"
     },
     {
+        "id": "ad0eb93a.d7d608",
+        "type": "subflow",
+        "name": "Netbooter",
+        "info": "# netBooter control\n\nThis subflow will take the following commands as a string:\n\n- `on n`  Switches outlet n on where n is outlet number\n- `off n`  Switches outlet n off where n is outlet number\n- `on *`  Switches all outlets on\n- `off *`  Switches all outlets off\n- `reboot n`  Reboots outlet n where n is outlet number\n- `stats`  Returns the outlets status as a JSON object\n\nIP address of the netBooter should be set as `msg.host` before the sublow.",
+        "in": [
+            {
+                "x": 60,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "d373211d.71e3e"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 680,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "9dcc9322.f3305",
+                        "port": 0
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "id": "c22ab366.379258",
         "type": "pjlink",
         "z": "51881e4c.2f3178",
@@ -62,6 +91,53 @@
         "wires": [
             [
                 "c22ab366.379258"
+            ]
+        ]
+    },
+    {
+        "id": "a3a3ac00.2f1418",
+        "type": "tcp request",
+        "z": "ad0eb93a.d7d608",
+        "server": "",
+        "port": "23",
+        "out": "sit",
+        "splitc": "0",
+        "name": "",
+        "x": 350,
+        "y": 60,
+        "wires": [
+            [
+                "9dcc9322.f3305"
+            ]
+        ]
+    },
+    {
+        "id": "9dcc9322.f3305",
+        "type": "function",
+        "z": "ad0eb93a.d7d608",
+        "name": "parse",
+        "func": "msg.payload = msg.payload.toString();\nif (msg.payload.length == 63) {\n    msg.payload = msg.payload.split('\\n\\r');\n    \n    var outlet1 = msg.payload[0].split('|');\n    var outlet2 = msg.payload[1].split('|');\n\n    \n    msg.payload = [];\n    msg.payload.push({\n        id : parseInt(outlet1[0].replace(/\\s+/g, '')),\n        name: outlet1[1].replace(/\\s+/g, ''),\n        status: outlet1[2].replace(/\\s+/g, '')\n    });\n    \n    msg.payload.push({\n        id : parseInt(outlet2[0].replace(/\\s+/g, '')),\n        name: outlet2[1].replace(/\\s+/g, ''),\n        status: outlet2[2].replace(/\\s+/g, '')\n    });\n    \n    msg.topic = msg.topic + '/stats';\n\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 510,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d373211d.71e3e",
+        "type": "function",
+        "z": "ad0eb93a.d7d608",
+        "name": "",
+        "func": "var code;\nvar arg1;\nvar arg2;\n\nif (msg.payload === \"stats\") {\n    code = \"pshow\";\n    msg.payload = `${code}\\r`;\n    return msg;\n}\n\nvar inputCode;\nvar inputArg;\n\nif (msg.payload.includes(\"on\") || msg.payload.includes(\"off\") || msg.payload.includes(\"reboot\")) {\n    inputCode = msg.payload.split(' ')[0];\n    inputArg = msg.payload.split(' ')[1];\n}\n\nif (inputCode === \"on\" || inputCode === \"off\") {\n    code = \"$A3\";\n    arg1 = inputArg;\n    \n    if (inputCode === \"on\") arg2 = 1;\n    if (inputCode === \"off\") arg2 = 0;\n    \n    if (arg1 === \"*\") {\n        code = \"$A7\";\n        msg.payload = `${code} ${arg2}\\r`;\n    } else {\n        msg.payload = `${code} ${arg1} ${arg2}\\r`;\n    }\n}\n\nif (inputCode === \"reboot\") {\n    code = \"$A4\";\n    arg1 = inputArg;\n    msg.payload = `${code} ${arg1}\\r`;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 190,
+        "y": 60,
+        "wires": [
+            [
+                "a3a3ac00.2f1418"
             ]
         ]
     }
