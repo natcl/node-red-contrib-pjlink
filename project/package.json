@@ -3,7 +3,7 @@
     "version": "0.0.5",
     "description": "A PJLink node for Node-RED",
     "scripts": {
-        "start": "node node_modules/node-red/red.js -v -u ."
+        "start": "npm install -f ; node node_modules/node-red/red.js -v -u ."
     },
     "dependencies": {
         "node-red": "~0.15.0",

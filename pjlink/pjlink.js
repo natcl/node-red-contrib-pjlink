@@ -14,35 +14,37 @@
  * limitations under the License.
  **/
 
-module.exports = function(RED) {  
+module.exports = function(RED) {
     var pjlink = require('pjlink');
     function PJLink_func(config) {
         RED.nodes.createNode(this,config);
         this.ip = config.ip;
         this.port = config.port;
         var node = this;
-        var beamer = new pjlink(node.ip, node.port, node.credentials.password);
+
+        node.beamer = new pjlink(node.ip, node.port, node.credentials.password);
         refreshNodeStatus();
-        var interval = setInterval(refreshNodeStatus, 60 * 1000);
+
+        node.interval = setInterval(refreshNodeStatus, 60 * 1000);
 
         function refreshNodeStatus() {
-            beamer.getPowerState(function(err, state) {
-                if (state == 0)
+            node.beamer.getPowerState(function(err, state) {
+                if (state === 0)
                     node.status({fill:"red",shape:"dot",text:"off"});
                 if (state == 1)
                     node.status({fill:"green",shape:"dot",text:"on"});
                 if (state == 2)
                     node.status({fill:"blue",shape:"dot",text:"cooling down..."});
                 if (state == 3)
-                    node.status({fill:"yellow",shape:"dot",text:"warming up..."});                
+                    node.status({fill:"yellow",shape:"dot",text:"warming up..."});
                 if (err)
                     node.status({fill:"red",shape:"dot",text:"error"});
             });
         }
 
-        this.on('input', function(msg) {
+        node.on('input', function(msg) {
             if (msg.payload == "on") {
-                beamer.powerOn(function(err){
+                node.beamer.powerOn(function(err){
                     if (err)
                         node.send([null, {payload: err}]);
                     else {
@@ -52,7 +54,7 @@ module.exports = function(RED) {
                 });
             }
             if (msg.payload == "off") {
-                beamer.powerOff(function(err){
+                node.beamer.powerOff(function(err){
                     if (err)
                         node.send([null, {payload: err}]);
                     else
@@ -61,7 +63,7 @@ module.exports = function(RED) {
                 });
             }
             if (msg.payload == "getname") {
-                beamer.getName(function(err, name){
+                node.beamer.getName(function(err, name){
                     if (err)
                         node.send([null, {payload: err}]);
                     else
@@ -69,7 +71,7 @@ module.exports = function(RED) {
                 });
             }
             if (msg.payload == "getmanufacturer") {
-                beamer.getManufacturer(function(err, manufacturer){
+                node.beamer.getManufacturer(function(err, manufacturer){
                     if (err)
                         node.send([null, {payload: err}]);
                     else
@@ -77,7 +79,7 @@ module.exports = function(RED) {
                 });
             }
             if (msg.payload == "getmodel") {
-                beamer.getModel(function(err, model){
+                node.beamer.getModel(function(err, model){
                     if (err)
                         node.send([null, {payload: err}]);
                     else
@@ -85,7 +87,7 @@ module.exports = function(RED) {
                 });
             }
             if (msg.payload == "getmute") {
-                beamer.getMute(function(err, mute){
+                node.beamer.getMute(function(err, mute){
                     if (err)
                         node.send([null, {payload: err}]);
                     else
@@ -93,7 +95,7 @@ module.exports = function(RED) {
                 });
             }
             if (msg.payload == "geterrors") {
-                beamer.getErrors(function(err, errors){
+                node.beamer.getErrors(function(err, errors){
                     if (err)
                         node.send([null, {payload: err}]);
                     else
@@ -101,7 +103,7 @@ module.exports = function(RED) {
                 });
             }
             if (msg.payload == "getlamps") {
-                beamer.getLamps(function(err, lamps){
+                node.beamer.getLamps(function(err, lamps){
                     if (err)
                         node.send([null, {payload: err}]);
                     else
@@ -109,7 +111,7 @@ module.exports = function(RED) {
                 });
             }
             if (msg.payload == "getinput") {
-                beamer.getInput(function(err, input){
+                node.beamer.getInput(function(err, input){
                     if (err)
                         node.send([null, {payload: err}]);
                     else
@@ -117,7 +119,7 @@ module.exports = function(RED) {
                 });
             }
             if (msg.payload == "getinputs") {
-                beamer.getInputs(function(err, inputs){
+                node.beamer.getInputs(function(err, inputs){
                     if (err)
                         node.send([null, {payload: err}]);
                     else
@@ -125,7 +127,7 @@ module.exports = function(RED) {
                 });
             }
             if (msg.payload == "getinfo") {
-                beamer.getInfo(function(err, info){
+                node.beamer.getInfo(function(err, info){
                     if (err)
                         node.send([null, {payload: err}]);
                     else
@@ -133,7 +135,7 @@ module.exports = function(RED) {
                 });
             }
             if (msg.payload == "getclass") {
-                beamer.getClass(function(err, _class){
+                node.beamer.getClass(function(err, _class){
                     if (err)
                         node.send([null, {payload: err}]);
                     else
@@ -141,7 +143,7 @@ module.exports = function(RED) {
                 });
             }
             if (msg.payload == "getpowerstate") {
-                beamer.getPowerState(function(err, state){
+                node.beamer.getPowerState(function(err, state){
                     if (err)
                         node.send([null, {payload: err}]);
                     else {
@@ -151,28 +153,28 @@ module.exports = function(RED) {
                 });
             }
             if (msg.payload == "muteon") {
-                beamer.setMute(true, function(err){
+                node.beamer.setMute(true, function(err){
                     if (err)
                         node.send([null, {payload: err}]);
                 });
             }
             if (msg.payload == "muteoff") {
-                beamer.setMute(false, function(err){
+                node.beamer.setMute(false, function(err){
                     if (err)
                         node.send([null, {payload: err}]);
                 });
             }
             if (msg.payload.setinput != null) {
-                beamer.setInput(msg.payload.setinput, function(err){
+                node.beamer.setInput(msg.payload.setinput, function(err){
                     if (err)
                         node.send([null, {payload: err}]);
                 });
             }
         });
-        
-        this.on('close', function() {
-            beamer.disconnect();
-            clearInterval(interval);
+
+        node.on('close', function() {
+            node.beamer.disconnect();
+            clearInterval(node.interval);
         });
     }
     RED.nodes.registerType("pjlink",PJLink_func,{

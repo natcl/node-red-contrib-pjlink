@@ -140,5 +140,279 @@
                 "a3a3ac00.2f1418"
             ]
         ]
+    },
+    {
+        "id": "a93bdf6e.bc622",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "",
+        "payload": "getpowerstate",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 310,
+        "y": 420,
+        "wires": [
+            [
+                "96189476.0b04b8"
+            ]
+        ]
+    },
+    {
+        "id": "dee6befd.304338",
+        "type": "debug",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 970,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "fd8d654e.956908",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "",
+        "payload": "on",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 290,
+        "y": 480,
+        "wires": [
+            [
+                "96189476.0b04b8"
+            ]
+        ]
+    },
+    {
+        "id": "9ef0d24b.2e7cf8",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "",
+        "payload": "getlamps",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 300,
+        "y": 360,
+        "wires": [
+            [
+                "96189476.0b04b8"
+            ]
+        ]
+    },
+    {
+        "id": "e612e74d.11411",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "",
+        "payload": "getinfo",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 290,
+        "y": 320,
+        "wires": [
+            [
+                "96189476.0b04b8"
+            ]
+        ]
+    },
+    {
+        "id": "8bb55991.e82018",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "",
+        "payload": "off",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 290,
+        "y": 520,
+        "wires": [
+            [
+                "96189476.0b04b8"
+            ]
+        ]
+    },
+    {
+        "id": "6d582a6f.394794",
+        "type": "pjlink",
+        "z": "51881e4c.2f3178",
+        "ip": "10.10.80.25",
+        "port": 4352,
+        "name": "",
+        "x": 470,
+        "y": 680,
+        "wires": [
+            [
+                "77f6867d.c99c3"
+            ],
+            [
+                "dfe325ec.7b493"
+            ]
+        ]
+    },
+    {
+        "id": "3b7aa6b1.4ab8da",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "",
+        "payload": "getpowerstate",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 290,
+        "y": 680,
+        "wires": [
+            [
+                "6d582a6f.394794"
+            ]
+        ]
+    },
+    {
+        "id": "16c20d46.f0edbb",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "",
+        "payload": "on",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 270,
+        "y": 740,
+        "wires": [
+            [
+                "6d582a6f.394794"
+            ]
+        ]
+    },
+    {
+        "id": "44b602d2.1a011c",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "",
+        "payload": "getlamps",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 280,
+        "y": 620,
+        "wires": [
+            [
+                "6d582a6f.394794"
+            ]
+        ]
+    },
+    {
+        "id": "81fc499b.c4f048",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "",
+        "payload": "getinfo",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 270,
+        "y": 580,
+        "wires": [
+            [
+                "6d582a6f.394794"
+            ]
+        ]
+    },
+    {
+        "id": "cad046f9.d2dd6",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "",
+        "payload": "off",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 270,
+        "y": 780,
+        "wires": [
+            [
+                "6d582a6f.394794"
+            ]
+        ]
+    },
+    {
+        "id": "77f6867d.c99c3",
+        "type": "debug",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 950,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "dfe325ec.7b493",
+        "type": "debug",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 950,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "26e8092c.9e56e6",
+        "type": "debug",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 970,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "96189476.0b04b8",
+        "type": "pjlink",
+        "z": "51881e4c.2f3178",
+        "ip": "10.10.80.68",
+        "port": 4352,
+        "name": "",
+        "x": 510,
+        "y": 420,
+        "wires": [
+            [
+                "dee6befd.304338"
+            ],
+            [
+                "26e8092c.9e56e6"
+            ]
+        ]
     }
 ]
