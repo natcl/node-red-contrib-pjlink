@@ -34,67 +34,6 @@
         ]
     },
     {
-        "id": "c22ab366.379258",
-        "type": "pjlink",
-        "z": "51881e4c.2f3178",
-        "ip": "127.0.0.1",
-        "port": 4352,
-        "name": "",
-        "x": 570,
-        "y": 160,
-        "wires": [
-            [
-                "b4e37cd7.f531f8"
-            ],
-            [
-                "a4513b41.eb4fa"
-            ]
-        ]
-    },
-    {
-        "id": "b4e37cd7.f531f8",
-        "type": "debug",
-        "z": "51881e4c.2f3178",
-        "name": "Main",
-        "active": true,
-        "console": "false",
-        "complete": "payload",
-        "x": 750,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "a4513b41.eb4fa",
-        "type": "debug",
-        "z": "51881e4c.2f3178",
-        "name": "Error",
-        "active": true,
-        "console": "false",
-        "complete": "payload",
-        "x": 750,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "de87bec3.9557c8",
-        "type": "inject",
-        "z": "51881e4c.2f3178",
-        "name": "",
-        "topic": "",
-        "payload": "getinfo",
-        "payloadType": "str",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "x": 370,
-        "y": 160,
-        "wires": [
-            [
-                "c22ab366.379258"
-            ]
-        ]
-    },
-    {
         "id": "a3a3ac00.2f1418",
         "type": "tcp request",
         "z": "ad0eb93a.d7d608",
@@ -156,7 +95,7 @@
         "y": 420,
         "wires": [
             [
-                "96189476.0b04b8"
+                "b5359b0a.013df8"
             ]
         ]
     },
@@ -187,7 +126,7 @@
         "y": 480,
         "wires": [
             [
-                "96189476.0b04b8"
+                "b5359b0a.013df8"
             ]
         ]
     },
@@ -206,7 +145,7 @@
         "y": 360,
         "wires": [
             [
-                "96189476.0b04b8"
+                "b5359b0a.013df8"
             ]
         ]
     },
@@ -225,7 +164,7 @@
         "y": 320,
         "wires": [
             [
-                "96189476.0b04b8"
+                "b5359b0a.013df8"
             ]
         ]
     },
@@ -244,25 +183,7 @@
         "y": 520,
         "wires": [
             [
-                "96189476.0b04b8"
-            ]
-        ]
-    },
-    {
-        "id": "6d582a6f.394794",
-        "type": "pjlink",
-        "z": "51881e4c.2f3178",
-        "ip": "10.10.80.25",
-        "port": 4352,
-        "name": "",
-        "x": 470,
-        "y": 680,
-        "wires": [
-            [
-                "77f6867d.c99c3"
-            ],
-            [
-                "dfe325ec.7b493"
+                "b5359b0a.013df8"
             ]
         ]
     },
@@ -274,15 +195,13 @@
         "topic": "",
         "payload": "getpowerstate",
         "payloadType": "str",
-        "repeat": "",
+        "repeat": "5",
         "crontab": "",
         "once": false,
-        "x": 290,
+        "x": 300,
         "y": 680,
         "wires": [
-            [
-                "6d582a6f.394794"
-            ]
+            []
         ]
     },
     {
@@ -299,9 +218,7 @@
         "x": 270,
         "y": 740,
         "wires": [
-            [
-                "6d582a6f.394794"
-            ]
+            []
         ]
     },
     {
@@ -312,15 +229,13 @@
         "topic": "",
         "payload": "getlamps",
         "payloadType": "str",
-        "repeat": "",
+        "repeat": "5",
         "crontab": "",
         "once": false,
-        "x": 280,
+        "x": 290,
         "y": 620,
         "wires": [
-            [
-                "6d582a6f.394794"
-            ]
+            []
         ]
     },
     {
@@ -337,9 +252,7 @@
         "x": 270,
         "y": 580,
         "wires": [
-            [
-                "6d582a6f.394794"
-            ]
+            []
         ]
     },
     {
@@ -356,9 +269,7 @@
         "x": 270,
         "y": 780,
         "wires": [
-            [
-                "6d582a6f.394794"
-            ]
+            []
         ]
     },
     {
@@ -374,44 +285,17 @@
         "wires": []
     },
     {
-        "id": "dfe325ec.7b493",
-        "type": "debug",
-        "z": "51881e4c.2f3178",
-        "name": "",
-        "active": true,
-        "console": "false",
-        "complete": "false",
-        "x": 950,
-        "y": 700,
-        "wires": []
-    },
-    {
-        "id": "26e8092c.9e56e6",
-        "type": "debug",
-        "z": "51881e4c.2f3178",
-        "name": "",
-        "active": true,
-        "console": "false",
-        "complete": "false",
-        "x": 970,
-        "y": 460,
-        "wires": []
-    },
-    {
-        "id": "96189476.0b04b8",
+        "id": "b5359b0a.013df8",
         "type": "pjlink",
         "z": "51881e4c.2f3178",
-        "ip": "10.10.80.68",
+        "ip": "192.168.1.81",
         "port": 4352,
         "name": "",
-        "x": 510,
+        "x": 590,
         "y": 420,
         "wires": [
             [
                 "dee6befd.304338"
-            ],
-            [
-                "26e8092c.9e56e6"
             ]
         ]
     }
