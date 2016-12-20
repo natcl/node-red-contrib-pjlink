@@ -85,14 +85,14 @@
         "type": "inject",
         "z": "51881e4c.2f3178",
         "name": "",
-        "topic": "",
+        "topic": "getpowerstate",
         "payload": "getpowerstate",
         "payloadType": "str",
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 310,
-        "y": 420,
+        "x": 300,
+        "y": 400,
         "wires": [
             [
                 "b5359b0a.013df8"
@@ -135,13 +135,13 @@
         "type": "inject",
         "z": "51881e4c.2f3178",
         "name": "",
-        "topic": "",
+        "topic": "getlamps",
         "payload": "getlamps",
         "payloadType": "str",
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 300,
+        "x": 270,
         "y": 360,
         "wires": [
             [
