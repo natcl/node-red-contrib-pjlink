@@ -191,12 +191,12 @@ module.exports = function(RED) {
                 });
             }
             if (msg.payload == "muteon") {
-                node.beamer.setMute(true, function(err) {
+                node.beamer.setMute({'video': true, 'audio': true}, function(err) {
                     if (err) node.error(err, msg);
                 });
             }
             if (msg.payload == "muteoff") {
-                node.beamer.setMute(false, function(err) {
+                node.beamer.setMute({'video': false, 'audio': false}, function(err) {
                     if (err) node.error(err, msg);
                 });
             }

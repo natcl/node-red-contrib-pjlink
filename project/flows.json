@@ -91,8 +91,8 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 300,
-        "y": 400,
+        "x": 220,
+        "y": 140,
         "wires": [
             [
                 "b5359b0a.013df8"
@@ -107,8 +107,8 @@
         "active": true,
         "console": "false",
         "complete": "false",
-        "x": 970,
-        "y": 420,
+        "x": 710,
+        "y": 160,
         "wires": []
     },
     {
@@ -122,8 +122,8 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 290,
-        "y": 480,
+        "x": 190,
+        "y": 440,
         "wires": [
             [
                 "b5359b0a.013df8"
@@ -141,8 +141,8 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 270,
-        "y": 360,
+        "x": 190,
+        "y": 100,
         "wires": [
             [
                 "b5359b0a.013df8"
@@ -160,8 +160,8 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 290,
-        "y": 320,
+        "x": 210,
+        "y": 60,
         "wires": [
             [
                 "b5359b0a.013df8"
@@ -179,8 +179,8 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 290,
-        "y": 520,
+        "x": 190,
+        "y": 480,
         "wires": [
             [
                 "b5359b0a.013df8"
@@ -198,8 +198,8 @@
         "repeat": "5",
         "crontab": "",
         "once": false,
-        "x": 300,
-        "y": 680,
+        "x": 200,
+        "y": 640,
         "wires": [
             []
         ]
@@ -215,8 +215,8 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 270,
-        "y": 740,
+        "x": 170,
+        "y": 700,
         "wires": [
             []
         ]
@@ -232,8 +232,8 @@
         "repeat": "5",
         "crontab": "",
         "once": false,
-        "x": 290,
-        "y": 620,
+        "x": 190,
+        "y": 580,
         "wires": [
             []
         ]
@@ -249,8 +249,8 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 270,
-        "y": 580,
+        "x": 170,
+        "y": 540,
         "wires": [
             []
         ]
@@ -266,23 +266,11 @@
         "repeat": "",
         "crontab": "",
         "once": false,
-        "x": 270,
-        "y": 780,
+        "x": 170,
+        "y": 740,
         "wires": [
             []
         ]
-    },
-    {
-        "id": "77f6867d.c99c3",
-        "type": "debug",
-        "z": "51881e4c.2f3178",
-        "name": "",
-        "active": true,
-        "console": "false",
-        "complete": "false",
-        "x": 950,
-        "y": 660,
-        "wires": []
     },
     {
         "id": "b5359b0a.013df8",
@@ -291,11 +279,68 @@
         "ip": "192.168.1.81",
         "port": 4352,
         "name": "",
-        "x": 590,
-        "y": 420,
+        "x": 510,
+        "y": 160,
         "wires": [
             [
                 "dee6befd.304338"
+            ]
+        ]
+    },
+    {
+        "id": "6baf572e.10f3c8",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "muteon",
+        "payload": "muteon",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 180,
+        "y": 180,
+        "wires": [
+            [
+                "b5359b0a.013df8"
+            ]
+        ]
+    },
+    {
+        "id": "48b78849.1b9308",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "muteoff",
+        "payload": "muteoff",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 180,
+        "y": 220,
+        "wires": [
+            [
+                "b5359b0a.013df8"
+            ]
+        ]
+    },
+    {
+        "id": "e95a871b.143228",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "getmute",
+        "payload": "getmute",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 180,
+        "y": 380,
+        "wires": [
+            [
+                "b5359b0a.013df8"
             ]
         ]
     }
