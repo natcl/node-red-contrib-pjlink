@@ -28,7 +28,7 @@ module.exports = function(RED) {
 
         if (node.ip && node.port) {
             node.projectors[node.ip + ':' + node.port] = new pjlink(node.ip, node.port, node.credentials.password);
-            node.warn(`Creating projector ${node.ip} at port ${node.port}`);
+            //node.warn(`Creating projector ${node.ip} at port ${node.port}`);
         }
         refreshNodeStatus();
 
@@ -91,19 +91,17 @@ module.exports = function(RED) {
                     } else {
                         node.projectors[projectorID] = new pjlink(msg.host, msg.port);
                     }
-                    node.warn(`Creating projector ${msg.host} at port ${msg.port}`);
+                    //node.warn(`Creating projector ${msg.host} at port ${msg.port}`);
                 }
             }
 
             if (node.ip && node.port  && (!msg.ip && !msg.port)) {
-                node.warn('Using ip from config');
+                //node.warn('Using ip from config');
                 msg.host = node.ip;
                 msg.port = node.port;
                 msg.password = node.credentials.password;
                 projectorID = msg.host + ':' + msg.port;
             }
-
-            node.warn(projectorID);
 
             if (msg.payload == "on") {
                 node.projectors[projectorID].powerOn(function(err) {
