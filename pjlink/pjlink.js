@@ -19,196 +19,288 @@ module.exports = function(RED) {
 
     function PJLink_func(config) {
         RED.nodes.createNode(this, config);
-        this.ip = config.ip;
-        this.port = config.port;
-        var node = this;
 
-        node.beamer = new pjlink(node.ip, node.port, node.credentials.password);
+        var node = this;
+        node.ip = config.ip;
+        node.port = parseInt(config.port);
+
+        node.projectors = {};
+
+        if (node.ip && node.port) {
+            node.projectors[node.ip + ':' + node.port] = new pjlink(node.ip, node.port, node.credentials.password);
+            node.warn(`Creating projector ${node.ip} at port ${node.port}`);
+        }
         refreshNodeStatus();
 
         node.interval = setInterval(refreshNodeStatus, 60 * 1000);
 
         function refreshNodeStatus() {
-            node.beamer.getPowerState(function(err, state) {
-                if (state === 0)
-                    node.status({
-                        fill: "red",
-                        shape: "dot",
-                        text: "off"
+            if (node.ip && node.port) {
+                if (node.projectors[node.ip + ':' + node.port]) {
+                    node.projectors[node.ip + ':' + node.port].getPowerState(function(err, state) {
+                        if (state === 0)
+                            node.status({
+                                fill: "red",
+                                shape: "dot",
+                                text: "off"
+                            });
+                        if (state == 1)
+                            node.status({
+                                fill: "green",
+                                shape: "dot",
+                                text: "on"
+                            });
+                        if (state == 2)
+                            node.status({
+                                fill: "blue",
+                                shape: "dot",
+                                text: "cooling down..."
+                            });
+                        if (state == 3)
+                            node.status({
+                                fill: "yellow",
+                                shape: "dot",
+                                text: "warming up..."
+                            });
+                        if (err)
+                            node.status({
+                                fill: "red",
+                                shape: "dot",
+                                text: "error"
+                            });
                     });
-                if (state == 1)
-                    node.status({
-                        fill: "green",
-                        shape: "dot",
-                        text: "on"
-                    });
-                if (state == 2)
-                    node.status({
-                        fill: "blue",
-                        shape: "dot",
-                        text: "cooling down..."
-                    });
-                if (state == 3)
-                    node.status({
-                        fill: "yellow",
-                        shape: "dot",
-                        text: "warming up..."
-                    });
-                if (err)
-                    node.status({
-                        fill: "red",
-                        shape: "dot",
-                        text: "error"
-                    });
-            });
+                }
+            }
         }
 
         node.on('input', function(msg) {
+            var projectorID;
+
+            if ((!node.port && !msg.port) || (!node.ip && !msg.host)) {
+                if (!node.port && !msg.port) node.error("Error: No port specified.", msg);
+                if (!node.ip && !msg.host) node.error("Error: No host specified.", msg);
+                return;
+            }
+
+            // If projector not in list, add it
+            if (msg.host && msg.port) {
+                projectorID = msg.host + ':' + msg.port;
+                if (!node.projectors[projectorID]) {
+                    if (msg.password) {
+                        node.projectors[projectorID] = new pjlink(msg.host, msg.port, msg.password);
+                    } else {
+                        node.projectors[projectorID] = new pjlink(msg.host, msg.port);
+                    }
+                    node.warn(`Creating projector ${msg.host} at port ${msg.port}`);
+                }
+            }
+
+            if (node.ip && node.port  && (!msg.ip && !msg.port)) {
+                node.warn('Using ip from config');
+                msg.host = node.ip;
+                msg.port = node.port;
+                msg.password = node.credentials.password;
+                projectorID = msg.host + ':' + msg.port;
+            }
+
+            node.warn(projectorID);
+
             if (msg.payload == "on") {
-                node.beamer.powerOn(function(err) {
+                node.projectors[projectorID].powerOn(function(err) {
                     if (err)
                         node.error(err, msg);
                     else {
-                        node.status({
-                            fill: "grey",
-                            shape: "dot",
-                            text: "updating..."
-                        });
-                        setTimeout(refreshNodeStatus, 15000);
+                        if (node.ip && node.port) {
+                            node.status({
+                                fill: "grey",
+                                shape: "dot",
+                                text: "updating..."
+                            });
+                            setTimeout(refreshNodeStatus, 15000);
+                        }
                     }
                 });
             }
             if (msg.payload == "off") {
-                node.beamer.powerOff(function(err) {
+                node.projectors[projectorID].powerOff(function(err) {
                     if (err)
                         node.error(err, msg);
-                    else
-                        node.status({
-                            fill: "grey",
-                            shape: "dot",
-                            text: "updating..."
-                        });
-                    setTimeout(refreshNodeStatus, 5000);
+                    else {
+                        if (node.ip && node.port) {
+                            node.status({
+                                fill: "grey",
+                                shape: "dot",
+                                text: "updating..."
+                            });
+                            setTimeout(refreshNodeStatus, 5000);
+                        }
+                    }
                 });
             }
             if (msg.payload == "getname") {
-                node.beamer.getName(function(err, name) {
-                    if (err) node.error(err, msg);
+                node.projectors[projectorID].getName(function(err, name) {
+                    if (err) {
+                        msg.payload = err;
+                        node.send([null, msg]);
+                    }
                     else {
                         msg.payload = name;
-                        node.send(msg);
+                        node.send([msg, null]);
                     }
                 });
             }
             if (msg.payload == "getmanufacturer") {
-                node.beamer.getManufacturer(function(err, manufacturer) {
-                    if (err) node.error(err, msg);
+                node.projectors[projectorID].getManufacturer(function(err, manufacturer) {
+                    if (err) {
+                        msg.payload = err;
+                        node.send([null, msg]);
+                    }
                     else {
                         msg.payload = manufacturer;
-                        node.send(msg);
+                        node.send([msg, null]);
                     }
                 });
             }
             if (msg.payload == "getmodel") {
-                node.beamer.getModel(function(err, model) {
-                    if (err) node.error(err, msg);
+                node.projectors[projectorID].getModel(function(err, model) {
+                    if (err) {
+                        msg.payload = err;
+                        node.send([null, msg]);
+                    }
                     else {
                         msg.payload = model;
-                        node.send(msg);
+                        node.send([msg, null]);
                     }
                 });
             }
             if (msg.payload == "getmute") {
-                node.beamer.getMute(function(err, mute) {
-                    if (err) node.error(err, msg);
+                node.projectors[projectorID].getMute(function(err, mute) {
+                    if (err) {
+                        msg.payload = err;
+                        node.send([null, msg]);
+                    }
                     else {
                         msg.payload = mute;
-                        node.send(msg);
+                        node.send([msg, null]);
                     }
                 });
             }
             if (msg.payload == "geterrors") {
-                node.beamer.getErrors(function(err, errors) {
-                    if (err) node.error(err, msg);
+                node.projectors[projectorID].getErrors(function(err, errors) {
+                    if (err) {
+                        msg.payload = err;
+                        node.send([null, msg]);
+                    }
                     else {
                         msg.payload = errors;
-                        node.send(msg);
+                        node.send([msg, null]);
                     }
                 });
             }
             if (msg.payload == "getlamps") {
-                node.beamer.getLamps(function(err, lamps) {
-                    if (err) node.error(err, msg);
+                node.projectors[projectorID].getLamps(function(err, lamps) {
+                    if (err) {
+                        msg.payload = err;
+                        node.send([null, msg]);
+                    }
                     else {
                         msg.payload = lamps;
-                        node.send(msg);
+                        node.send([msg, null]);
                     }
                 });
             }
             if (msg.payload == "getinput") {
-                node.beamer.getInput(function(err, input) {
-                    if (err) node.error(err, msg);
+                node.projectors[projectorID].getInput(function(err, input) {
+                    if (err) {
+                        msg.payload = err;
+                        node.send([null, msg]);
+                    }
                     else {
                         msg.payload = input;
-                        node.send(msg);
+                        node.send([msg, null]);
                     }
                 });
             }
             if (msg.payload == "getinputs") {
-                node.beamer.getInputs(function(err, inputs) {
-                    if (err) node.error(err, msg);
+                node.projectors[projectorID].getInputs(function(err, inputs) {
+                    if (err) {
+                        msg.payload = err;
+                        node.send([null, msg]);
+                    }
                     else {
                         msg.payload = inputs;
-                        node.send(msg);
+                        node.send([msg, null]);
                     }
                 });
             }
             if (msg.payload == "getinfo") {
-                node.beamer.getInfo(function(err, info) {
-                    if (err) node.error(err, msg);
+                node.projectors[projectorID].getInfo(function(err, info) {
+                    if (err) {
+                        msg.payload = err;
+                        node.send([null, msg]);
+                    }
                     else {
                         msg.payload = info;
-                        node.send(msg);
+                        node.send([msg, null]);
                     }
                 });
             }
             if (msg.payload == "getclass") {
-                node.beamer.getClass(function(err, _class) {
-                    if (err) node.error(err, msg);
+                node.projectors[projectorID].getClass(function(err, _class) {
+                    if (err) {
+                        msg.payload = err;
+                        node.send([null, msg]);
+                    }
                     else {
                         msg.payload = _class;
-                        node.send(msg);
+                        node.send([msg, null]);
                     }
                 });
             }
             if (msg.payload == "getpowerstate") {
-                node.beamer.getPowerState(function(err, state) {
-                    if (err) node.error(err, msg);
+                node.projectors[projectorID].getPowerState(function(err, state) {
+                    if (err) {
+                        msg.payload = err;
+                        node.send([null, msg]);
+                    }
                     else {
                         msg.payload = state;
-                        node.send(msg);
+                        node.send([msg, null]);
                     }
                 });
             }
             if (msg.payload == "muteon") {
-                node.beamer.setMute({'video': true, 'audio': true}, function(err) {
-                    if (err) node.error(err, msg);
+                node.projectors[projectorID].setMute({'video': true, 'audio': true}, function(err) {
+                    if (err) {
+                        msg.payload = err;
+                        node.send([null, msg]);
+                    }
                 });
             }
             if (msg.payload == "muteoff") {
-                node.beamer.setMute({'video': false, 'audio': false}, function(err) {
-                    if (err) node.error(err, msg);
+                node.projectors[projectorID].setMute({'video': false, 'audio': false}, function(err) {
+                    if (err) {
+                        msg.payload = err;
+                        node.send([null, msg]);
+                    }
                 });
             }
             if (typeof msg.payload == 'object') {
-                node.beamer.setInput(msg.payload, function(err) {
-                    if (err) node.error(err, msg);
+                node.projectors[projectorID].setInput(msg.payload, function(err) {
+                    if (err) {
+                        msg.payload = err;
+                        node.send([null, msg]);
+                    }
                 });
             }
         });
 
         node.on('close', function() {
-            node.beamer.disconnect();
+            for (let projector in node.projectors) {
+                if (node.projectors[projector]) node.projectors[projector].disconnect();
+            }
+            node.projectors = {};
+            node.status({});
             clearInterval(node.interval);
         });
     }

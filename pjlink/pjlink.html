@@ -19,15 +19,15 @@
         category: 'advanced',
         color: '#6293FE',
         defaults: {
-            ip: {value:"", required: true},
-            port: {value:4352, required: true, validate:RED.validators.number()},
+            ip: {value:"", required: false},
+            port: {value:"", required: false},
             name: {value:""}
         },
         credentials: {
             password: {type:"password"}
         },
         inputs:1,
-        outputs:1,
+        outputs:2,
         icon: "light.png",
         label: function() {
             return this.name||"pjlink";
@@ -42,7 +42,7 @@
     </div>
     <div class="form-row">
         <label for="node-input-port"><i class="fa fa-random"></i> Port</label>
-        <input type="text" id="node-input-port" placeholder="Port">
+        <input type="text" id="node-input-port" placeholder="4352">
     </div>
     <div class="form-row">
         <label for="node-input-password"><i class="fa fa-lock"></i> Password</label>
@@ -79,5 +79,9 @@
     <p>You can also set the inputs by sending this object as <code>msg.payload</code></p>
 
     <p><code>{"source": 3, "channel": 3}</code></p>
+    <p>PJLink specfic errors will be sent to the second output.<p>
+    <p>You can connect to multiple projectors with the same object by specifying <code>msg.host</code>, <code>msg.port</code> and <code>msg.password</code>
+    In this mode the status will not be shown.
+    </p>
     <p>See <a href="http://flows.nodered.org/flow/f9b28307c3841f6ef1e6" target="_new">this flow </a>for an example of all the commands.<p>
 </script>

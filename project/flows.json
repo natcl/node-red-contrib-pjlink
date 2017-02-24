@@ -94,9 +94,7 @@
         "x": 220,
         "y": 140,
         "wires": [
-            [
-                "b5359b0a.013df8"
-            ]
+            []
         ]
     },
     {
@@ -106,9 +104,9 @@
         "name": "",
         "active": true,
         "console": "false",
-        "complete": "false",
-        "x": 710,
-        "y": 160,
+        "complete": "true",
+        "x": 950,
+        "y": 340,
         "wires": []
     },
     {
@@ -125,9 +123,7 @@
         "x": 190,
         "y": 440,
         "wires": [
-            [
-                "b5359b0a.013df8"
-            ]
+            []
         ]
     },
     {
@@ -144,9 +140,7 @@
         "x": 190,
         "y": 100,
         "wires": [
-            [
-                "b5359b0a.013df8"
-            ]
+            []
         ]
     },
     {
@@ -163,9 +157,7 @@
         "x": 210,
         "y": 60,
         "wires": [
-            [
-                "b5359b0a.013df8"
-            ]
+            []
         ]
     },
     {
@@ -182,9 +174,7 @@
         "x": 190,
         "y": 480,
         "wires": [
-            [
-                "b5359b0a.013df8"
-            ]
+            []
         ]
     },
     {
@@ -273,21 +263,6 @@
         ]
     },
     {
-        "id": "b5359b0a.013df8",
-        "type": "pjlink",
-        "z": "51881e4c.2f3178",
-        "ip": "192.168.1.81",
-        "port": 4352,
-        "name": "",
-        "x": 510,
-        "y": 160,
-        "wires": [
-            [
-                "dee6befd.304338"
-            ]
-        ]
-    },
-    {
         "id": "6baf572e.10f3c8",
         "type": "inject",
         "z": "51881e4c.2f3178",
@@ -301,9 +276,7 @@
         "x": 180,
         "y": 180,
         "wires": [
-            [
-                "b5359b0a.013df8"
-            ]
+            []
         ]
     },
     {
@@ -320,9 +293,7 @@
         "x": 180,
         "y": 220,
         "wires": [
-            [
-                "b5359b0a.013df8"
-            ]
+            []
         ]
     },
     {
@@ -339,8 +310,251 @@
         "x": 180,
         "y": 380,
         "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9c0b2e79.191ef",
+        "type": "pjlink",
+        "z": "51881e4c.2f3178",
+        "ip": "10.10.80.80",
+        "port": "4353",
+        "name": "",
+        "x": 810,
+        "y": 340,
+        "wires": [
             [
-                "b5359b0a.013df8"
+                "dee6befd.304338"
+            ],
+            [
+                "45924945.971098"
+            ]
+        ]
+    },
+    {
+        "id": "b3ad3d4d.351858",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "",
+        "payload": "getlamps",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 420,
+        "y": 340,
+        "wires": [
+            [
+                "54a24a21.4bb5fc"
+            ]
+        ]
+    },
+    {
+        "id": "54a24a21.4bb5fc",
+        "type": "change",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "host",
+                "pt": "msg",
+                "to": "10.10.80.80",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "port",
+                "pt": "msg",
+                "to": "4352",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "password",
+                "pt": "msg",
+                "to": "admin",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 620,
+        "y": 340,
+        "wires": [
+            [
+                "9c0b2e79.191ef"
+            ]
+        ]
+    },
+    {
+        "id": "8f7c6939.39afa",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "",
+        "payload": "getlamps",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 420,
+        "y": 400,
+        "wires": [
+            [
+                "27e11f2e.347398"
+            ]
+        ]
+    },
+    {
+        "id": "27e11f2e.347398",
+        "type": "change",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "host",
+                "pt": "msg",
+                "to": "10.10.80.80",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "port",
+                "pt": "msg",
+                "to": "4353",
+                "tot": "num"
+            },
+            {
+                "t": "set",
+                "p": "password",
+                "pt": "msg",
+                "to": "admin",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 620,
+        "y": 400,
+        "wires": [
+            [
+                "9c0b2e79.191ef"
+            ]
+        ]
+    },
+    {
+        "id": "7a0e20c9.6260e",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "",
+        "payload": "getlamps",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 420,
+        "y": 280,
+        "wires": [
+            [
+                "9c0b2e79.191ef"
+            ]
+        ]
+    },
+    {
+        "id": "45924945.971098",
+        "type": "debug",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 940,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "2c7b9859.01b8f8",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "",
+        "payload": "getmodel",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 420,
+        "y": 440,
+        "wires": [
+            [
+                "27e11f2e.347398"
+            ]
+        ]
+    },
+    {
+        "id": "2dec9c2b.72ae74",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "",
+        "payload": "getmute",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 420,
+        "y": 480,
+        "wires": [
+            [
+                "27e11f2e.347398"
+            ]
+        ]
+    },
+    {
+        "id": "ba401130.e531c8",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "",
+        "payload": "on",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 410,
+        "y": 520,
+        "wires": [
+            [
+                "27e11f2e.347398"
+            ]
+        ]
+    },
+    {
+        "id": "34dc74cc.59fd6c",
+        "type": "inject",
+        "z": "51881e4c.2f3178",
+        "name": "",
+        "topic": "",
+        "payload": "off",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 410,
+        "y": 560,
+        "wires": [
+            [
+                "27e11f2e.347398"
             ]
         ]
     }
