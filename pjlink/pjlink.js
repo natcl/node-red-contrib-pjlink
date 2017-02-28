@@ -14,6 +14,8 @@
  * limitations under the License.
  **/
 
+ 'use strict';
+
 module.exports = function(RED) {
     var pjlink = require('pjlink');
 
