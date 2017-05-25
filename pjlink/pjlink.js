@@ -36,6 +36,16 @@ module.exports = function(RED) {
 
         node.interval = setInterval(refreshNodeStatus, 60 * 1000);
 
+		function handleError(msg, err, projectorID) {
+			node.error(err, msg);
+			node.send([null, msg]);
+			if(projectorID && node.projectors[projectorID] && err && err.includes && err.includes("ECONNREFUSED")){
+				node.warn("connection to " +projectorID+ " is being reset");
+				//we attempt another connexion every time the connection is refused
+				node.projectors[projectorID] = null;
+				delete node.projectors[projectorID];
+			}
+		}
         function refreshNodeStatus() {
             if (node.ip && node.port) {
                 if (node.projectors[node.ip + ':' + node.port]) {
@@ -107,8 +117,9 @@ module.exports = function(RED) {
 
             if (msg.payload == "on") {
                 node.projectors[projectorID].powerOn(function(err) {
-                    if (err)
-                        node.error(err, msg);
+                    if (err){
+						handleError(msg, err, projectorID);
+					}
                     else {
                         if (node.ip && node.port) {
                             node.status({
@@ -123,8 +134,9 @@ module.exports = function(RED) {
             }
             if (msg.payload == "off") {
                 node.projectors[projectorID].powerOff(function(err) {
-                    if (err)
-                        node.error(err, msg);
+                    if (err){
+						handleError(msg, err, projectorID);
+					}
                     else {
                         if (node.ip && node.port) {
                             node.status({
@@ -139,10 +151,9 @@ module.exports = function(RED) {
             }
             if (msg.payload == "getname") {
                 node.projectors[projectorID].getName(function(err, name) {
-                    if (err) {
-                        msg.payload = err;
-                        node.send([null, msg]);
-                    }
+                    if (err){
+						handleError(msg, err, projectorID);
+					}
                     else {
                         msg.payload = name;
                         node.send([msg, null]);
@@ -151,10 +162,9 @@ module.exports = function(RED) {
             }
             if (msg.payload == "getmanufacturer") {
                 node.projectors[projectorID].getManufacturer(function(err, manufacturer) {
-                    if (err) {
-                        msg.payload = err;
-                        node.send([null, msg]);
-                    }
+                    if (err){
+						handleError(msg, err, projectorID);
+					}
                     else {
                         msg.payload = manufacturer;
                         node.send([msg, null]);
@@ -163,10 +173,9 @@ module.exports = function(RED) {
             }
             if (msg.payload == "getmodel") {
                 node.projectors[projectorID].getModel(function(err, model) {
-                    if (err) {
-                        msg.payload = err;
-                        node.send([null, msg]);
-                    }
+                    if (err){
+						handleError(msg, err, projectorID);
+					}
                     else {
                         msg.payload = model;
                         node.send([msg, null]);
@@ -175,10 +184,9 @@ module.exports = function(RED) {
             }
             if (msg.payload == "getmute") {
                 node.projectors[projectorID].getMute(function(err, mute) {
-                    if (err) {
-                        msg.payload = err;
-                        node.send([null, msg]);
-                    }
+                    if (err){
+						handleError(msg, err, projectorID);
+					}
                     else {
                         msg.payload = mute;
                         node.send([msg, null]);
@@ -187,10 +195,9 @@ module.exports = function(RED) {
             }
             if (msg.payload == "geterrors") {
                 node.projectors[projectorID].getErrors(function(err, errors) {
-                    if (err) {
-                        msg.payload = err;
-                        node.send([null, msg]);
-                    }
+                    if (err){
+						handleError(msg, err, projectorID);
+					}
                     else {
                         msg.payload = errors;
                         node.send([msg, null]);
@@ -199,10 +206,9 @@ module.exports = function(RED) {
             }
             if (msg.payload == "getlamps") {
                 node.projectors[projectorID].getLamps(function(err, lamps) {
-                    if (err) {
-                        msg.payload = err;
-                        node.send([null, msg]);
-                    }
+                    if (err){
+						handleError(msg, err, projectorID);
+					}
                     else {
                         msg.payload = lamps;
                         node.send([msg, null]);
@@ -211,10 +217,9 @@ module.exports = function(RED) {
             }
             if (msg.payload == "getinput") {
                 node.projectors[projectorID].getInput(function(err, input) {
-                    if (err) {
-                        msg.payload = err;
-                        node.send([null, msg]);
-                    }
+                    if (err){
+						handleError(msg, err, projectorID);
+					}
                     else {
                         msg.payload = input;
                         node.send([msg, null]);
@@ -223,10 +228,9 @@ module.exports = function(RED) {
             }
             if (msg.payload == "getinputs") {
                 node.projectors[projectorID].getInputs(function(err, inputs) {
-                    if (err) {
-                        msg.payload = err;
-                        node.send([null, msg]);
-                    }
+                    if (err){
+						handleError(msg, err, projectorID);
+					}
                     else {
                         msg.payload = inputs;
                         node.send([msg, null]);
@@ -235,10 +239,9 @@ module.exports = function(RED) {
             }
             if (msg.payload == "getinfo") {
                 node.projectors[projectorID].getInfo(function(err, info) {
-                    if (err) {
-                        msg.payload = err;
-                        node.send([null, msg]);
-                    }
+                    if (err){
+						handleError(msg, err, projectorID);
+					}
                     else {
                         msg.payload = info;
                         node.send([msg, null]);
@@ -247,10 +250,9 @@ module.exports = function(RED) {
             }
             if (msg.payload == "getclass") {
                 node.projectors[projectorID].getClass(function(err, _class) {
-                    if (err) {
-                        msg.payload = err;
-                        node.send([null, msg]);
-                    }
+                    if (err){
+						handleError(msg, err, projectorID);
+					}
                     else {
                         msg.payload = _class;
                         node.send([msg, null]);
@@ -259,10 +261,9 @@ module.exports = function(RED) {
             }
             if (msg.payload == "getpowerstate") {
                 node.projectors[projectorID].getPowerState(function(err, state) {
-                    if (err) {
-                        msg.payload = err;
-                        node.send([null, msg]);
-                    }
+                    if (err){
+						handleError(msg, err, projectorID);
+					}
                     else {
                         msg.payload = state;
                         node.send([msg, null]);
@@ -271,26 +272,23 @@ module.exports = function(RED) {
             }
             if (msg.payload == "muteon") {
                 node.projectors[projectorID].setMute({'video': true, 'audio': true}, function(err) {
-                    if (err) {
-                        msg.payload = err;
-                        node.send([null, msg]);
-                    }
+                    if (err){
+						handleError(msg, err, projectorID);
+					}
                 });
             }
             if (msg.payload == "muteoff") {
                 node.projectors[projectorID].setMute({'video': false, 'audio': false}, function(err) {
-                    if (err) {
-                        msg.payload = err;
-                        node.send([null, msg]);
-                    }
+                    if (err){
+						handleError(msg, err, projectorID);
+					}
                 });
             }
             if (typeof msg.payload == 'object') {
                 node.projectors[projectorID].setInput(msg.payload, function(err) {
-                    if (err) {
-                        msg.payload = err;
-                        node.send([null, msg]);
-                    }
+                    if (err){
+						handleError(msg, err, projectorID);
+					}
                 });
             }
         });
