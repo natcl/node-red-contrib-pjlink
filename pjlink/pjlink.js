@@ -38,7 +38,7 @@ module.exports = function(RED) {
 
         function handleError(msg, err, projectorID) {
             node.error(`${projectorID} ${err}`, msg);
-            node.send([null, msg]);
+            node.send([null, {payload: `${projectorID} ${err}`}]);
             if (projectorID && node.projectors[projectorID] && err && err.includes && err.includes("ECONNREFUSED")) {
                 node.warn("connection to " + projectorID + " is being reset");
                 //we attempt another connexion every time the connection is refused
