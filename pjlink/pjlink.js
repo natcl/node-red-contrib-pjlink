@@ -37,7 +37,7 @@ module.exports = function(RED) {
         node.interval = setInterval(refreshNodeStatus, 60 * 1000);
 
         function handleError(msg, err, projectorID) {
-            node.error(err, msg);
+            node.error(`${projectorID} ${err}`, msg);
             node.send([null, msg]);
             if (projectorID && node.projectors[projectorID] && err && err.includes && err.includes("ECONNREFUSED")) {
                 node.warn("connection to " + projectorID + " is being reset");

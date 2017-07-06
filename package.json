@@ -3,7 +3,7 @@
   "version": "1.0.2",
   "description": "A PJLink node for Node-RED",
   "dependencies": {
-    "pjlink": "0.2.2"
+    "pjlink": "0.2.4"
   },
   "repository": {
     "type": "git",
